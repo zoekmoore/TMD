@@ -6,6 +6,7 @@ them to their corresponding amino acid sequences.
 '''
 from readfasta import readfasta
 from RNATranslate import translate
+from TMDFilter import assignHydrophobicity
 
 # Read in the RNA sequences from a file specified by user input
 filename = input("Please enter the input file name: ")
@@ -46,3 +47,9 @@ handle.write(aaseqtwo + "\n\n")
 handle.write(aaseqthree + "\n\n")
 
 handle.close()
+
+# For each amino acid sequence, determine the regions under our window size of 11
+# that have a hydrophobicity sum under our threshold of 5
+hydroone = assignHydrophobicity(aaseqone)
+hydrotwo = assignHydrophobicity(aaseqtwo)
+hydrothree = assignHydrophobicity(aaseqthree)
