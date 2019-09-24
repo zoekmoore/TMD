@@ -44,6 +44,5 @@ handle.write(aaseqone + "\n\n")
 handle.write(aaseqtwo + "\n\n")
 
 handle.write(aaseqthree + "\n\n")
-print(aaseqone)
 
 handle.close()
