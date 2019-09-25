@@ -1,4 +1,5 @@
 
+################### OBSOLETE - in Bioinfo_Assignment1_ . . . #######################
 '''
 translate - a subroutine that translates an RNA sequence into its
 corresponding amino acid sequence

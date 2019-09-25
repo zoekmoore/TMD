@@ -1,3 +1,5 @@
+################### OBSELETE - in Bioinfo_Assignment1_ . . . #####################
+
 '''
 DEFINE FUNCTION HERE
 '''

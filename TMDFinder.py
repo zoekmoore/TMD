@@ -1,3 +1,5 @@
+################ OBSELETE - in Bioinfo_Assignment1_ . . . ####################
+
 '''
 Zoe Moore 9/15/2019
 
