@@ -65,5 +65,21 @@ def filterHydrophobicity(hydrosequence):
             length = 0
             
     return tmdlocations
-            
-        
+
+def findTMD(sequence, handle):
+    # Assign hydrophobicity scores to the amino acid sequence
+    # Store only those values that fall below the threshold
+    hydrosequence = assignHydrophobicity(sequence)
+
+    # Find consecutive sequences of 18-30 amino acids from the ideal
+    # hydrophobicity scores
+    tmdlocations = filterHydrophobicity(hydrosequence)
+
+    if tmdlocations == '':      # If no transmembrane domain locations are found
+        handle.write("Transmembrane Protein: NO\n\n\n\n")
+    else:
+        handle.write("Transmembrane Protein: YES\n\n")
+        handle.write("Transmembrane domains found at amino acid indices: \n" + tmdlocations + "\n\n\n\n")
+
+
+

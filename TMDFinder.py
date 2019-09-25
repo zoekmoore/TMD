@@ -55,11 +55,12 @@ hydroone = assignHydrophobicity(aaseqone)
 hydrotwo = assignHydrophobicity(aaseqtwo)
 hydrothree = assignHydrophobicity(aaseqthree)
 
-print(hydroone)
-
 # Prompt user for where to save transmembrane domain results
 tmdfilename = input("Please enter the a hydrophobicity score output file name: ")
 
 tmdone = filterHydrophobicity(hydroone)
+tmdtwo = filterHydrophobicity(hydrotwo)
+tmdthree = filterHydrophobicity(hydrothree)
 
-print(tmdone)
+#CHANGES:   need to change it to be generic; shouldn't assume that it only takes in three amino acid sequences
+#           need a specific and formatted output, probably ideally into one file
