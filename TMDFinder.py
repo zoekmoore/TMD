@@ -7,6 +7,7 @@ them to their corresponding amino acid sequences.
 from readfasta import readfasta
 from RNATranslate import translate
 from TMDFilter import assignHydrophobicity
+from TMDFilter import filterHydrophobicity
 
 # Read in the RNA sequences from a file specified by user input
 filename = input("Please enter the input file name: ")
@@ -53,3 +54,10 @@ handle.close()
 hydroone = assignHydrophobicity(aaseqone)
 hydrotwo = assignHydrophobicity(aaseqtwo)
 hydrothree = assignHydrophobicity(aaseqthree)
+
+print(hydroone)
+
+# Prompt user for where to save transmembrane domain results
+tmdfilename = input("Please enter the a hydrophobicity score output file name: ")
+
+filterHydrophobicity(hydroone)

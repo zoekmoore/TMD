@@ -1,4 +1,6 @@
-
+'''
+DEFINE FUNCTION HERE
+'''
 def assignHydrophobicity(sequence):
     # Create hydrophobicity assignments per amino acids
     # Based on Hessa Scale
@@ -43,3 +45,27 @@ def assignHydrophobicity(sequence):
     # Return the list of indices containing hydrophobicity value sums less than our threshold
     return hydrosequence
     
+'''
+DEFINE FUNCTION HERE
+'''
+def filterHydrophobicity(hydrosequence):
+    tempstart = 0
+    length = 0
+
+    for i in range(len(hydrosequence) - 1):
+        if ((hydrosequence[i+1] - hydrosequence[i]) == 1 and i != len(hydrosequence) - 2):    # If there is not a gap in hydrophobicity scores
+            if tempstart == 0:
+                tempstart = hydrosequence[i]                                        # Store the possible starting index
+            length += 1
+            print(tempstart)
+        else:
+            if length > 6 and length < 20:
+                print(tempstart, hydrosequence[i] + 11)
+            tempstart = 0
+            length = 0
+            
+# THIS NEEDS TO BE FIXED: you don't have it correctly selecting the chunks. the business of getting it to select the gap-less intervals
+# appears to work fine with the mechanism of restarting, but the business of getting things within the ideal range of 18-30 amino acids
+# doesn't appear to work how we want it to so need to fix that
+            
+        
