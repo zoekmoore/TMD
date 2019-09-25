@@ -60,4 +60,6 @@ print(hydroone)
 # Prompt user for where to save transmembrane domain results
 tmdfilename = input("Please enter the a hydrophobicity score output file name: ")
 
-filterHydrophobicity(hydroone)
+tmdone = filterHydrophobicity(hydroone)
+
+print(tmdone)
