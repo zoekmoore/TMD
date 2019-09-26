@@ -3,12 +3,12 @@ Zoe Moore
 Updated: 9/25/2019
 
 Reads RNA sequences from an input .txt file and determines whether or
-not they contain transmembrane domains
+not they contain transmembrane helices
 '''
 from readfasta import readfasta
 
 '''
-main - streamlines the process of determining transmembrane domains by
+main - streamlines the process of determining transmembrane helices by
 calling necessary functions for each step of the process; handles formatting
 output and files
 '''
@@ -31,7 +31,7 @@ def main():
         translatedseq = translate(rnainfo[i][2])
         handle.write("Protein Sequence " + str(i+1) + ": " + translatedseq + "\n\n")
         
-        # Scan the single-letter amino acid sequence for transmembrane domains
+        # Scan the single-letter amino acid sequence for transmembrane helices
         # Write results to the output file
         findTMD(translatedseq, handle)
 
@@ -189,20 +189,20 @@ def assignHydrophobicity(sequence):
 filterHydrophobicity - filters through the windows of hydrophobicity
 sums below the threshold of 5, looking for sequences between length 18 to 30 amino
 acids (or indices of 7 to 19 in terms of the length 11 sliding windows), per the
-requirement for transmembrane domain length, that do not contain any breaks.
+requirement for transmembrane helix length, that do not contain any breaks.
 Stores the indices of the continuous sequences, if they exist.
 
 Parameter: the sequence of hydrophobicity value sums on the window size of length 11
 amino acids.
 '''
 def filterHydrophobicity(hydrosequence):
-    # Initialize the possible start of a transmembrane domain sequence
+    # Initialize the possible start of a transmembrane helix sequence
     tempstart = -1
 
-    # Initialize the length of the transmembrane domain sequence
+    # Initialize the length of the transmembrane helix sequence
     length = 0
 
-    # Initialize a list of the transmembrane domain locations
+    # Initialize a list of the transmembrane helix locations
     tmdlocations = []
 
     # Iterate through the hydrophobicity sums to look for consecutive
@@ -216,7 +216,7 @@ def filterHydrophobicity(hydrosequence):
             length += 1
         else:                                                                                   # If a gap has been found in the sequence
             if length > 6 and length < 20:                                                      # If the sequence is between 18 to 30 amino acids
-                # Add the interval of the sequence start and sequence end to the transmembrane domain list
+                # Add the interval of the sequence start and sequence end to the transmembrane helix list
                 #tmdlocations += str(tempstart) + ':' + str(hydrosequence[i] + 11) + '\n'
                 tmdlocations.append(tempstart)
                 tmdlocations.append(hydrosequence[i] + 10)
@@ -229,7 +229,7 @@ def filterHydrophobicity(hydrosequence):
 
 '''
 findTMD - calls assignHydrophobicity and filterHydrophobicity in succession,
-then it determines from the results if transmembrane domains were found and indicates
+then it determines from the results if transmembrane helices were found and indicates
 those results accordingly on the output file.
 
 Parameter: the single-letter amino acid sequence that results from translating the
@@ -245,15 +245,15 @@ def findTMD(sequence, handle):
     # hydrophobicity scores
     tmdlocations = filterHydrophobicity(hydrosequence)
 
-    if tmdlocations == []:                                                   # If no transmembrane domain locations are found
-        # Indicate no transmembrane domains were found
+    if tmdlocations == []:                                                   # If no transmembrane helix locations are found
+        # Indicate no transmembrane helices were found
         handle.write("Transmembrane Protein: NO\n")
         handle.write("\tNo transmembrane helices detected.\n\n\n\n")
-    else:                                                                    # Otherwise, if transmembrane domain locations are found
-        # Indicate transmembrane domains were found
+    else:                                                                    # Otherwise, if transmembrane helix locations are found
+        # Indicate transmembrane helices were found
         handle.write("Transmembrane Protein: YES\n\n")
         
-        # Specify the indices of the regions where the domains were likely found
+        # Specify the indices of the regions where the helices were likely found
         handle.write("Transmembrane helix/helices found at amino acid indices: \n")
         for i in range(0, len(tmdlocations), 2):
             handle.write("Start Index: " + str(tmdlocations[i]) + "     End Index: " + str(tmdlocations[i+1]) + "     Range: " + str((tmdlocations[i+1] - tmdlocations[i])) + "\n")
