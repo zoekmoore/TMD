@@ -4,7 +4,7 @@ Protein Sequence 1: MSNPQKALNDFLSSESVHTHDSSRKQSNKQSSDEGRSSSQPSHHHSGGTNNSNNNNNNNN
 
 Transmembrane Protein: YES
 
-Transmembrane domains found at amino acid indices: 
+Transmembrane helix/helices found at amino acid indices: 
 Start Index: 255     End Index: 277     Range: 22
 	Subsequence: FLAEFMGTMVMIIFGSAVVCQVN
 Start Index: 324     End Index: 349     Range: 25

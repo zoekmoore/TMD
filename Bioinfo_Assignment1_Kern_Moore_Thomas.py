@@ -38,6 +38,8 @@ def main():
     # Close file
     handle.close()
 
+    print("Results printed in " + outfilename)
+
 '''
 translate - a subroutine that translates an RNA sequence into its
 corresponding single-letter amino acid sequence.
@@ -177,9 +179,7 @@ def assignHydrophobicity(sequence):
             windowSum += code[sequence[j]]         
         if(windowSum < 4.5):                          # if the sum is less than our threshold of 5 . . .
             # store the index of that low hydrophobicity region
-            hydrosequence.append(i) 
-            print(windowSum)
-            print(i)               
+            hydrosequence.append(i)            
         windowSum = 0
         
     # Return the list of indices containing hydrophobicity value sums less than our threshold
