@@ -24,7 +24,7 @@ def main():
     # Iterate through each RNA sequence in the input file
     for i in range(len(rnainfo)):
         # Specify gene that is being evaluated
-        handle.write("Gene " + str(i+1) + ":\n" + rnainfo[i][2] + "\n\n")
+        handle.write("Gene " + str(i+1) + ": " + rnainfo[i][2] + "\n\n")
         
         # Translate the RNA Sequence to its corresponding single-letter amino acid sequence
         # Write information to the output file
@@ -171,13 +171,15 @@ def assignHydrophobicity(sequence):
     # Sum the hydrophobicity scores in window sizes of 11 amino acids
     # If the sum is lower than our threshold of 5, store the start index i
     # of that sum [taken from index i to i + 11] into the hydrosequence list
-    for i in range(0, len(sequence) - 11, 1):       # iterate through the amino acid sequence
-        for j in range(i, i + 11, 1):               # iterate through 11 amino acids, per the window size
+    for i in range(0, len(sequence) - 10, 1):       # iterate through the amino acid sequence
+        for j in range(i, i + 10, 1):               # iterate through 11 amino acids, per the window size
             # sum the hydrophobicity values of the window
             windowSum += code[sequence[j]]         
-        if(windowSum < 5):                          # if the sum is less than our threshold of 5 . . .
+        if(windowSum < 4.5):                          # if the sum is less than our threshold of 5 . . .
             # store the index of that low hydrophobicity region
-            hydrosequence.append(i)                 
+            hydrosequence.append(i) 
+            print(windowSum)
+            print(i)               
         windowSum = 0
         
     # Return the list of indices containing hydrophobicity value sums less than our threshold
@@ -201,7 +203,7 @@ def filterHydrophobicity(hydrosequence):
     length = 0
 
     # Initialize a list of the transmembrane domain locations
-    tmdlocations = ''
+    tmdlocations = []
 
     # Iterate through the hydrophobicity sums to look for consecutive
     # sequences of length 18 to 30 amino acids
@@ -215,7 +217,9 @@ def filterHydrophobicity(hydrosequence):
         else:                                                                                   # If a gap has been found in the sequence
             if length > 6 and length < 20:                                                      # If the sequence is between 18 to 30 amino acids
                 # Add the interval of the sequence start and sequence end to the transmembrane domain list
-                tmdlocations += str(tempstart) + ':' + str(hydrosequence[i] + 11) + '\n'
+                #tmdlocations += str(tempstart) + ':' + str(hydrosequence[i] + 11) + '\n'
+                tmdlocations.append(tempstart)
+                tmdlocations.append(hydrosequence[i] + 10)
             
             # Reset the sequence start and sequence length trackers
             tempstart = -1
@@ -241,15 +245,20 @@ def findTMD(sequence, handle):
     # hydrophobicity scores
     tmdlocations = filterHydrophobicity(hydrosequence)
 
-    if tmdlocations == '':                                                   # If no transmembrane domain locations are found
+    if tmdlocations == []:                                                   # If no transmembrane domain locations are found
         # Indicate no transmembrane domains were found
-        handle.write("Transmembrane Protein: NO\n\n\n\n")
+        handle.write("Transmembrane Protein: NO\n")
+        handle.write("\tNo transmembrane helices detected.\n\n\n\n")
     else:                                                                    # Otherwise, if transmembrane domain locations are found
         # Indicate transmembrane domains were found
         handle.write("Transmembrane Protein: YES\n\n")
         
         # Specify the indices of the regions where the domains were likely found
-        handle.write("Transmembrane domains found at amino acid indices: \n" + tmdlocations + "\n\n\n\n")
-
+        handle.write("Transmembrane helix/helices found at amino acid indices: \n")
+        for i in range(0, len(tmdlocations), 2):
+            handle.write("Start Index: " + str(tmdlocations[i]) + "     End Index: " + str(tmdlocations[i+1]) + "     Range: " + str((tmdlocations[i+1] - tmdlocations[i])) + "\n")
+            handle.write("\tSubsequence: " + sequence[tmdlocations[i]:tmdlocations[i + 1] + 1] + "\n")
+        handle.write("\n\n\n\n")
+        
 if __name__ == "__main__":
     main()
